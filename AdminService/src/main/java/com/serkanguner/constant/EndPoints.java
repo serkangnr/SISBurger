@@ -11,7 +11,7 @@ public class EndPoints {
 
 
     //entities:
-    public static final String AUTH=ROOT+"/auth";
+    public static final String ADMIN=ROOT+"/admin";
 
 
     //methods:

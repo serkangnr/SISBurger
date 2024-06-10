@@ -24,8 +24,8 @@ public class GlobalExceptionHandler {
     }
 
 
-    @ExceptionHandler(AuthServiceException.class)
-    public ResponseEntity<ErrorMessage> handleDemoException(AuthServiceException ex) {
+    @ExceptionHandler(AdminServiceException.class)
+    public ResponseEntity<ErrorMessage> handleDemoException(AdminServiceException ex) {
         ErrorType errorType = ex.getErrorType();
         return new ResponseEntity(createErrorMessage(ex,
                 errorType),
@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    /*@ExceptionHandler(MethodArgumentNotValidException.class)
     public final ResponseEntity<ErrorMessage> handleMethodArgumentNotValidException(
             MethodArgumentNotValidException exception) {
 
@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
         errorMessage.setFields(fields);
         return new ResponseEntity<>(errorMessage,
                 errorType.getHttpStatus());
-    }
+    }*/
 
 
 }

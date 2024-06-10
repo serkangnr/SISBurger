@@ -6,8 +6,8 @@ spring:
     mongodb:
       host: localhost
       port: 27027
-      database: AdminLoginDB
-      username: admin
+      database: AdminDB
+      username: sisburger
       password: root
   rabbitmq:
     host: localhost
@@ -15,14 +15,14 @@ spring:
     username: user
     password: password
 
-authservice:
+adminservice:
   secret:
     secret-key: ${SIS_SECRET_KEY}
     issuer: ${SIS_ISSUER}
+    admin-name: "admin"
+    admin-password: "root"
 
 
 
-springdoc:
-  swagger-ui:
-    tryItOutEnabled: false
+
 
