@@ -51,6 +51,7 @@ allprojects {
         annotationProcessor libs.mapstructProcessor
         implementation libs.jwt
         implementation libs.springBootDataMongo
+        implementation libs.springRabbit
 
     }
 

@@ -1,0 +1,28 @@
+server:
+  port: 9091
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27027
+      database: ProductDB
+      username: sisburger
+      password: root
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
+
+
+productservice:
+  secret:
+    secret-key: "OktUenBm7lbgzQ2"
+    secret-issuer: "sisburger"
+    admin-name: "admin"
+    admin-password: "root"
+  redis:
+    host: localhost
+    port: 6379

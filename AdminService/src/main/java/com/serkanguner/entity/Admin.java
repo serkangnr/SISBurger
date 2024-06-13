@@ -9,12 +9,17 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @Builder
 @Document
 public class Admin {
     @MongoId
-    private String id;
-    private String name;
-    private String password;
+    String id;
+    String name;
+    String password;
+    @Builder.Default
+    Role role = Role.ADMIN;
+
+
 
 }

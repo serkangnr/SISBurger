@@ -1,0 +1,22 @@
+server:
+  port: 9095
+
+spring:
+  mail:
+    host: smtp.mail.yahoo.com
+    port: 587
+    username: serkan.guner@yahoo.com
+    password: ${password}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
+

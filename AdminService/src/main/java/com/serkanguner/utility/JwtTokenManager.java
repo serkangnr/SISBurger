@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
+import com.serkanguner.entity.Role;
 import com.serkanguner.exception.AdminServiceException;
 
 import com.serkanguner.exception.ErrorType;
@@ -18,10 +19,10 @@ import java.util.Optional;
 
 @Component
 public class JwtTokenManager {
-    @Value("${authservice.secret.secret-key}")
+    @Value("${adminservice.secret.secret-key}")
     String secretKey;
     Long expireTime = 1000L * 60 * 15; //15 dakikalik bir zaman
-    @Value("${authservice.secret.issuer}")
+    @Value("${adminservice.secret.secret-issuer}")
     String issuer;
 
     /**
@@ -30,16 +31,19 @@ public class JwtTokenManager {
      * O yuzden claimler ile e-mail , password gibi herkesin gormesini istemedigimiz bilgileri payload kisminda tutmaliyiz.
      */
 
+
     //1. Token uretmeli
-    public Optional<String> createToken(Long id) {
+    public Optional<String> createToken(String id, String name, String password, Role role) {
         String token = "";
         try {
             token = JWT.create()
                     .withClaim("id", id)
-                    .withClaim("whichpage", "AuthMicroService")
-                    .withClaim("ders", "Java JWT")
-                    .withClaim("group", "Java14")
-                    .withIssuer("Java14")
+                    .withClaim("name", name)
+                    .withClaim("password", password)
+                    .withClaim("role", role.toString())
+                    .withClaim("class", "Java JWT")
+                    .withClaim("group", "sisburger")
+                    .withIssuer("sisburger")
                     .withIssuedAt(new Date()) // Tokenin yaratildigi an
                     .withExpiresAt(new Date(System.currentTimeMillis() + expireTime))
                     .sign(Algorithm.HMAC512(secretKey));
@@ -52,7 +56,7 @@ public class JwtTokenManager {
 
     }
 
-    /*public Optional<String> createDoubleToken(Long id, Role role){
+/*public Optional<String> createDoubleToken(Long id, Role role){
         String doubleToken = "";
         try {
             doubleToken = JWT.create()
@@ -104,7 +108,7 @@ public class JwtTokenManager {
             JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).build();
             DecodedJWT decodedJWT = verifier.verify(token);
 
-            if (decodedJWT==null) {
+            if (decodedJWT == null) {
                 return Optional.empty();
             }
             String id = decodedJWT.getClaim("id").asString();
@@ -118,7 +122,7 @@ public class JwtTokenManager {
         }
     }
 
-    /*public Optional<Role> getRoleFromToken(String token){
+    public Optional<Role> getRoleFromToken(String token){
         try {
             Algorithm algorithm = Algorithm.HMAC512(secretKey);
             JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).build();
@@ -132,9 +136,10 @@ public class JwtTokenManager {
             return Optional.of(Role.valueOf(role));
 
         } catch (IllegalArgumentException e) {
-            throw new AuthServiceException((ErrorType.TOKEN_ARGUMENT_NOTVALID));
+            throw new AdminServiceException((ErrorType.TOKEN_ARGUMENT_NOTVALID));
         } catch (JWTVerificationException e) {
-            throw new AuthServiceException(ErrorType.TOKEN_VERIFY_FAILED);
+            throw new AdminServiceException(ErrorType.TOKEN_VERIFY_FAILED);
         }
-    }*/
+    }
+
 }

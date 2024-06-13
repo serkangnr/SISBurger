@@ -4,4 +4,6 @@ include 'UserService'
 include 'ProductService'
 include 'CartService'
 include 'ConfigServer'
+include 'MailService'
+include 'OrderService'
 

@@ -6,7 +6,7 @@ spring:
     mongodb:
       host: localhost
       port: 27027
-      database: AdminDB
+      database: AdminHomeDB
       username: sisburger
       password: root
   rabbitmq:
@@ -17,8 +17,8 @@ spring:
 
 adminservice:
   secret:
-    secret-key: ${SIS_SECRET_KEY}
-    issuer: ${SIS_ISSUER}
+    secret-key: "OktUenBm7lbgzQ2"
+    secret-issuer: "sisburger"
     admin-name: "admin"
     admin-password: "root"
 
