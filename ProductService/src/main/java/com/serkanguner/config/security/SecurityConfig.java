@@ -22,7 +22,7 @@ public class SecurityConfig {
         httpSecurity
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers("options/findall/**").hasAuthority("ADMIN")
+                        .requestMatchers("product/option/findall/**").hasAuthority("ADMIN")
                         .requestMatchers("/api/v1/options/**").hasAuthority("ADMIN")
                         .requestMatchers("/api/v1/options").hasAuthority("ADMIN")
                         .requestMatchers("/api/v1/menus/**").hasAuthority("ADMIN")

@@ -17,35 +17,35 @@ import java.util.Optional;
 public class OptionController {
     private final OptionService optionService;
 
-    @GetMapping
+    @GetMapping(EndPoints.FINDALL)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public List<Option> getAllOptions() {
         return optionService.getAllOptions();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(EndPoints.FINDBYID)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Option> getOptionById(@PathVariable String id) {
+    public ResponseEntity<Option> getOptionById(@RequestParam String id) {
         Optional<Option> option = optionService.getOptionById(id);
         return option.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping(EndPoints.SAVE)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public Option addOption(@RequestBody Option option) {
         return optionService.addOption(option);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(EndPoints.UPDATE)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Option> updateOption(@PathVariable String id, @RequestBody Option option) {
+    public ResponseEntity<Option> updateOption(@RequestParam String id, @RequestBody Option option) {
         Option updatedOption = optionService.updateOption(id, option);
         return updatedOption != null ? ResponseEntity.ok(updatedOption) : ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(EndPoints.DELETE)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Void> deleteOption(@PathVariable String id) {
+    public ResponseEntity<Void> deleteOption(@RequestParam String id) {
         optionService.deleteOption(id);
         return ResponseEntity.noContent().build();
     }

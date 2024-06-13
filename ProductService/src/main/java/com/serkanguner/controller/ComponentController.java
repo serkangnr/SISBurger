@@ -17,35 +17,35 @@ import java.util.Optional;
 public class ComponentController {
     private final ComponentService componentService;
 
-    @GetMapping
+    @GetMapping(EndPoints.FINDALL)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public List<Component> getAllComponents() {
         return componentService.getAllComponents();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(EndPoints.FINDBYID)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Component> getComponentById(@PathVariable String id) {
+    public ResponseEntity<Component> getComponentById(@RequestParam String id) {
         Optional<Component> component = componentService.getComponentById(id);
         return component.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping(EndPoints.SAVE)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public Component addComponent(@RequestBody Component component) {
         return componentService.addComponent(component);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(EndPoints.UPDATE)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Component> updateComponent(@PathVariable String id, @RequestBody Component component) {
+    public ResponseEntity<Component> updateComponent(@RequestParam String id, @RequestBody Component component) {
         Component updatedComponent = componentService.updateComponent(id, component);
         return updatedComponent != null ? ResponseEntity.ok(updatedComponent) : ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(EndPoints.DELETE)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Void> deleteComponent(@PathVariable String id) {
+    public ResponseEntity<Void> deleteComponent(@RequestParam String id) {
         componentService.deleteComponent(id);
         return ResponseEntity.noContent().build();
     }

@@ -29,4 +29,5 @@ public class EndPoints {
     public static final String ACTIVATEACCOUNT = "/activateaccount";
 
 
+    public static final String FIND_BY_USERID = "/findbyuserid";
 }

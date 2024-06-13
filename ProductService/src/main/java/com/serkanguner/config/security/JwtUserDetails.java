@@ -22,12 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtUserDetails implements UserDetailsService {
     private final JwtTokenManager jwtTokenManager;
-    private final CategoryService categoryService;
-    private final ComponentService componentService;
-    private final MenuItemService menuItemService;
-    private final MenuService menuService;
-    private final OptionService optionService;
-    private final OrderService orderService;
+
 
     public TokenReturnDto getToken(String token){
         String id = jwtTokenManager.getIdFromToken(token).orElseThrow(() -> new ProductServiceException(ErrorType.INVALID_TOKEN));

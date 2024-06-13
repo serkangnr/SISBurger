@@ -1,5 +1,7 @@
 package com.serkanguner.service;
 
+import com.serkanguner.config.security.JwtUserDetails;
+import com.serkanguner.config.swagger.OpenApiConfig;
 import com.serkanguner.dto.request.CartRequestDto;
 import com.serkanguner.dto.request.ProductChooseRequestDto;
 import com.serkanguner.dto.request.TokenReturnDto;
@@ -16,6 +18,7 @@ import com.serkanguner.repository.OrderRepository;
 import com.serkanguner.utility.JwtTokenManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +38,11 @@ public class OrderService {
     private final OptionService optionService;
     private final JwtTokenManager jwtTokenManager;
     private final RabbitTemplate rabbitTemplate;
+
+
+
+
+
 
 
     public List<Category> getAllCategories() {

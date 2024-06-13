@@ -2,6 +2,7 @@ package com.serkanguner.controller;
 
 import com.serkanguner.constant.EndPoints;
 import com.serkanguner.dto.request.CartRequestDto;
+import com.serkanguner.entity.Cart;
 import com.serkanguner.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,8 @@ public class CartController {
 
 
     @GetMapping(EndPoints.FINDALL)
-    public ResponseEntity<List<CartRequestDto>> getCart(){
-        return ResponseEntity.ok(cartService.getCart());
+    public ResponseEntity<List<Cart>> getCart(String userId){
+        return ResponseEntity.ok(cartService.getCart(userId));
     }
     @PutMapping(EndPoints.UPDATE)
     public ResponseEntity<String> updateCart(@RequestParam(name = "cartId") String cartId, @RequestParam(name = "queantity") int quantity){
@@ -32,8 +33,16 @@ public class CartController {
         return ResponseEntity.ok(cartService.deleteCart(cartId));
     }
     @PostMapping(EndPoints.CONFIRMATION)
-    public ResponseEntity<String> addCart(@RequestParam String cartId){
+    public ResponseEntity<String> confirmCart(@RequestParam String cartId){
         return ResponseEntity.ok(cartService.cartConfirmation(cartId));
+    }
+    @PostMapping(EndPoints.CONFIRMATIONDTO)
+    public ResponseEntity<CartRequestDto> confirmCartDto(@RequestParam String cartId){
+        return ResponseEntity.ok(cartService.cartConfirmationDto(cartId));
+    }
+    @PostMapping(EndPoints.CONFIRMATIONBYUSERID)
+    public ResponseEntity<String> confirmCartByUserId(@RequestParam String userId){
+        return ResponseEntity.ok(cartService.cartConfirmationByUserId(userId));
     }
 
 

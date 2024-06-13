@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 
@@ -40,34 +39,17 @@ public class CartService {
 
     }
 
-
-    public List<CartRequestDto> getCart() {
-        List<Cart> cartList = cartRepository.findAll();
-        AtomicBoolean deleted = new AtomicBoolean(false);
-        AtomicReference<CartRequestDto> cartRequestDto = new AtomicReference<>();
-        AtomicReference<List<CartRequestDto>> requestDto = new AtomicReference<>(new ArrayList<>());
-
-
+    public List<Cart> getCart(String userId) {
+        List<Cart> cartList = cartRepository.findAllByUserId(userId);
+        List<Cart> newList = new ArrayList<>();
         cartList.forEach(cart -> {
-            cartRequestDto.set(CartRequestDto.builder()
-                    .userId(cart.getUserId())
-                    .name(cart.getName())
-                    .description(cart.getDescription())
-                    .menuItemid(cart.getProductId())
-                    .quantity(cart.getQuantity())
-                    .components(cart.getComponents())
-                    .options(cart.getOptions())
-                    .price(cart.getTotalPrice())
-                    .build());
-            CartRequestDto dto = cartRequestDto.getAcquire();
-
-            requestDto.set(List.of(dto));
+            if (cart.getCartStatus().equals(CartStatus.ACTIVE)) {
+                newList.add(cart);
+            }
         });
 
 
-
-        return requestDto.get();
-
+        return newList;
     }
 
     public String updateQuantity(String cartId, int quantity) {
@@ -90,5 +72,32 @@ public class CartService {
         cartRepository.save(cart);
         return "Cart confirmed";
 
+    }
+    public CartRequestDto cartConfirmationDto(String cartId) {
+        Cart cart = cartRepository.findById(cartId).orElseThrow();
+        cart.setTotalPrice(cart.getTotalPrice() * cart.getQuantity());
+        cart.setCartStatus(CartStatus.DELETED);
+        cartRepository.save(cart);
+        CartRequestDto cartRequestDto = CartRequestDto.builder()
+                .name(cart.getName())
+                .description(cart.getDescription())
+                .userId(cart.getUserId())
+                .menuItemid(cart.getProductId())
+                .components(cart.getComponents())
+                .options(cart.getOptions())
+                .quantity(cart.getQuantity())
+                .price(cart.getTotalPrice())
+                .build();
+        return cartRequestDto;
+
+    }
+    public String cartConfirmationByUserId(String userId) {
+        List<Cart> cartList = cartRepository.findAllByUserId(userId);
+        cartList.forEach(cart -> {
+            cart.setTotalPrice(cart.getTotalPrice() * cart.getQuantity());
+            cart.setCartStatus(CartStatus.DELETED);
+            cartRepository.save(cart);
+        });
+        return "Cart confirmed";
     }
 }

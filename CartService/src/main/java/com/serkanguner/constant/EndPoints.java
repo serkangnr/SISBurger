@@ -27,4 +27,7 @@ public class EndPoints {
     public static final String LOGIN = "/login";
     public static final String ACTIVATEACCOUNT = "/activateaccount";
 
+    public static final String CONFIRMATIONBYUSERID ="/confirmationbyuserid";
+    public static final String CONFIRMATIONDTO = "/confirmationdto";
+    ;
 }

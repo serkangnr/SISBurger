@@ -23,29 +23,29 @@ public class CategoryController {
         return categoryService.getAllCategories();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(EndPoints.FINDCATEGORIESBYID)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Category> getCategoryById(@PathVariable String id) {
+    public ResponseEntity<Category> getCategoryById(@RequestParam String id) {
         Optional<Category> category = categoryService.getCategoryById(id);
         return category.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping(EndPoints.SAVE)
     @PreAuthorize("hasAuthority('ADMIN')")
     public Category addCategory(@RequestBody Category category) {
         return categoryService.addCategory(category);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(EndPoints.UPDATE)
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Category> updateCategory(@PathVariable String id, @RequestBody Category category) {
+    public ResponseEntity<Category> updateCategory(@RequestParam String id, @RequestBody Category category) {
         Category updatedCategory = categoryService.updateCategory(id, category);
         return updatedCategory != null ? ResponseEntity.ok(updatedCategory) : ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(EndPoints.DELETE)
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Void> deleteCategory(@PathVariable String id) {
+    public ResponseEntity<Void> deleteCategory(@RequestParam String id) {
         categoryService.deleteCategory(id);
         return ResponseEntity.noContent().build();
     }

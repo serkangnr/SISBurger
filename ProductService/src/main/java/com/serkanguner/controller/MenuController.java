@@ -17,35 +17,35 @@ import java.util.Optional;
 public class MenuController {
     private final MenuService menuService;
 
-    @GetMapping
+    @GetMapping(EndPoints.FINDALL)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public List<Menu> getAllMenus() {
         return menuService.getAllMenus();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(EndPoints.FINDBYID)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Menu> getMenuById(@PathVariable String id) {
+    public ResponseEntity<Menu> getMenuById(@RequestParam String id) {
         Optional<Menu> menu = menuService.getMenuById(id);
         return menu.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping(EndPoints.SAVE)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public Menu addMenu(@RequestBody Menu menu) {
         return menuService.addMenu(menu);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(EndPoints.UPDATE)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Menu> updateMenu(@PathVariable String id, @RequestBody Menu menu) {
+    public ResponseEntity<Menu> updateMenu(@RequestParam String id, @RequestBody Menu menu) {
         Menu updatedMenu = menuService.updateMenu(id, menu);
         return updatedMenu != null ? ResponseEntity.ok(updatedMenu) : ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(EndPoints.DELETE)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Void> deleteMenu(@PathVariable String id) {
+    public ResponseEntity<Void> deleteMenu(@RequestParam String id) {
         menuService.deleteMenu(id);
         return ResponseEntity.noContent().build();
     }

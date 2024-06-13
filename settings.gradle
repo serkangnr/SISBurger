@@ -6,4 +6,7 @@ include 'CartService'
 include 'ConfigServer'
 include 'MailService'
 include 'OrderService'
+include 'Gateway'
+include 'GatewayService'
+include 'ConfigServerGit'
 

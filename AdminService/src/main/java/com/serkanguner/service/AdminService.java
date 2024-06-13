@@ -45,7 +45,7 @@ public class AdminService {
     public String login(String name, String password) {
         Admin admin = adminRepository.findByName(name);
 
-        if (admin!= null && adminName.equals(name) && adminPassword.equals(password)) {
+        if (admin!= null && admin.getName().equals(name) && admin.getPassword().equals(password)) {
             return jwtTokenManager.createToken(admin.getId(),admin.getName(),admin.getPassword(),admin.getRole()).get();
         } else {
             throw new AdminServiceException(ErrorType.ADMIN_NOT_FOUND);

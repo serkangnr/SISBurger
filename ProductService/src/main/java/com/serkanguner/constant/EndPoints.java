@@ -42,4 +42,7 @@ public class EndPoints {
     public static final String MENUSLIST = "/menuslist";
     public static final String URUNSEC ="/urunsec" ;
     public static final String URUNLISTELE ="/urunlistele" ;
+    public static final String FINDCATEGORIESBYID ="/findcategoriesbyid";
+    public static final String ADDCATEGORIES = "/addcategories" ;
+    ;
 }
