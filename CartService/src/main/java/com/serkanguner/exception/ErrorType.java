@@ -14,7 +14,9 @@ public enum ErrorType {
     USER_NOT_ACTIVE(1005,"User Aktif Degil" ,HttpStatus.BAD_REQUEST),
     TOKEN_CREATION_FAILED(2001,"Token Olusturulurken Hata Meydana geldi." ,HttpStatus.INTERNAL_SERVER_ERROR ),
     TOKEN_ARGUMENT_NOTVALID(2002,"Token Argumanı Yanlıs" ,HttpStatus.BAD_REQUEST),
-    TOKEN_VERIFY_FAILED(2003,"Token verify etmede bir hata meydana geldi." ,HttpStatus.BAD_REQUEST );
+    TOKEN_VERIFY_FAILED(2003,"Token verify etmede bir hata meydana geldi." ,HttpStatus.BAD_REQUEST ),
+    INVALID_TOKEN(2004,"Token ile yetkiniz yok" , HttpStatus.BAD_REQUEST),
+    INVALID_UNAUTHORIZED(2005,"Token ile yetkiniz yok" ,HttpStatus.BAD_REQUEST);
 
 
 

@@ -35,7 +35,7 @@ public class JwtTokenManager {
         try {
             token = JWT.create()
                     .withClaim("id", id)
-                    .withClaim("whichpage", "UserService")
+                    .withClaim("whichpage", "AdminService")
                     .withClaim("class", "Java JWT")
                     .withClaim("group", "sisburger")
                     .withIssuer("sisburger")
@@ -116,8 +116,48 @@ public class JwtTokenManager {
             throw new CartServiceException(ErrorType.TOKEN_VERIFY_FAILED);
         }
     }
+    public Optional<String> getNameFromToken(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC512(secretKey);
+            JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
 
-/*public Optional<Role> getRoleFromToken(String token){
+            if (decodedJWT == null) {
+                return Optional.empty();
+            }
+            String name = decodedJWT.getClaim("name").asString();
+
+            return Optional.of(name);
+
+        } catch (IllegalArgumentException e) {
+            throw new CartServiceException((ErrorType.TOKEN_ARGUMENT_NOTVALID));
+        } catch (JWTVerificationException e) {
+            throw new CartServiceException(ErrorType.TOKEN_VERIFY_FAILED);
+        }
+    }
+    public Optional<String> getPasswordFromToken(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC512(secretKey);
+            JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+
+            if (decodedJWT == null) {
+                return Optional.empty();
+            }
+            String password = decodedJWT.getClaim("password").asString();
+
+            return Optional.of(password);
+
+        } catch (IllegalArgumentException e) {
+            throw new CartServiceException((ErrorType.TOKEN_ARGUMENT_NOTVALID));
+        } catch (JWTVerificationException e) {
+            throw new CartServiceException(ErrorType.TOKEN_VERIFY_FAILED);
+        }
+    }
+
+
+
+public Optional<String> getRoleFromToken(String token){
         try {
             Algorithm algorithm = Algorithm.HMAC512(secretKey);
             JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).build();
@@ -128,13 +168,13 @@ public class JwtTokenManager {
             }
             String role = decodedJWT.getClaim("role").asString();
 
-            return Optional.of(Role.valueOf(role));
+            return Optional.of(role);
 
         } catch (IllegalArgumentException e) {
-            throw new AuthServiceException((ErrorType.TOKEN_ARGUMENT_NOTVALID));
+            throw new CartServiceException((ErrorType.TOKEN_ARGUMENT_NOTVALID));
         } catch (JWTVerificationException e) {
-            throw new AuthServiceException(ErrorType.TOKEN_VERIFY_FAILED);
+            throw new CartServiceException(ErrorType.TOKEN_VERIFY_FAILED);
         }
-    }*/
+    }
 
 }

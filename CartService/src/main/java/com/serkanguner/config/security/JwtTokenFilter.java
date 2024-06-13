@@ -1,7 +1,7 @@
 package com.serkanguner.config.security;
 
+import com.serkanguner.exception.CartServiceException;
 import com.serkanguner.exception.ErrorType;
-import com.serkanguner.exception.ProductServiceException;
 import com.serkanguner.utility.JwtTokenManager;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -36,7 +36,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             System.out.println("JwtTokenFilter ile yakalanan token:" + token);
             String adminId =
                     jwtTokenManager.getIdFromToken(token)
-                            .orElseThrow(() -> new ProductServiceException(ErrorType.INVALID_TOKEN));
+                            .orElseThrow(() -> new CartServiceException(ErrorType.INVALID_TOKEN));
             System.out.println("JwtTokenFilter ile yakalanan Id:" + adminId);
 
 

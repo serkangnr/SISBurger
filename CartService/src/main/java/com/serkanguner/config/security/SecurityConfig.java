@@ -22,21 +22,16 @@ public class SecurityConfig {
         httpSecurity
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers("options/findall/**").hasAuthority("ADMIN")
-                        .requestMatchers("/api/v1/options/**").hasAuthority("ADMIN")
-                        .requestMatchers("/api/v1/options").hasAuthority("ADMIN")
-                        .requestMatchers("/api/v1/menus/**").hasAuthority("ADMIN")
-                        .requestMatchers("/api/v1/menus").hasAuthority("ADMIN")
-                        .requestMatchers("/api/v1/menuitem/**").hasAuthority("ADMIN")
-                        .requestMatchers("/api/v1/menuitem").hasAuthority("ADMIN")
-                        .requestMatchers("/api/v1/component/**").hasAuthority("ADMIN")
-                        .requestMatchers("/api/v1/component").hasAuthority("ADMIN")
-                        .requestMatchers("/api/v1/categories/**").hasAuthority("ADMIN")
-                        .requestMatchers("/api/v1/categories/**").hasAuthority("ADMIN")
-                        .requestMatchers("/api/v1/order/urunsec/**").hasAuthority("USER")
-                        .requestMatchers("/api/v1/order/urunlistele/**").hasAuthority("USER")
-                        .requestMatchers("/api/v1/order/menuslist/**").hasAuthority("USER")
-                        .requestMatchers("/api/v1/order/categorieslist/**").hasAuthority("USER")
+                        .requestMatchers("options/findall/**").hasAuthority("USER")
+                        .requestMatchers("/api/v1/cart/update/**").hasAuthority("USER")
+                        .requestMatchers("/api/v1/cart/update").hasAuthority("USER")
+                        .requestMatchers("/api/v1/cart/confirmation/**").hasAuthority("USER")
+                        .requestMatchers("/api/v1/cart/confirmation").hasAuthority("USER")
+                        .requestMatchers("/api/v1/cart/findall/**").hasAuthority("USER")
+                        .requestMatchers("/api/v1/cart/findall").hasAuthority("USER")
+                        .requestMatchers("/api/v1/cart/delete/**").hasAuthority("USER")
+                        .requestMatchers("/api/v1/cart/delete").hasAuthority("USER")
+
 
                         //.requestMatchers("/api/v1/order/**").hasAnyAuthority("USER","ADMIN")
                         /*.requestMatchers("/api/v1/auth/softdelete").hasAnyAuthority("ADMIN")*/

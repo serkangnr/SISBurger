@@ -1,9 +1,7 @@
 package com.serkanguner.config.security;
-
-
 import com.serkanguner.dto.request.TokenReturnDto;
+import com.serkanguner.exception.CartServiceException;
 import com.serkanguner.exception.ErrorType;
-import com.serkanguner.exception.ProductServiceException;
 import com.serkanguner.utility.JwtTokenManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,18 +19,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtUserDetails implements UserDetailsService {
     private final JwtTokenManager jwtTokenManager;
-    private final CategoryService categoryService;
-    private final ComponentService componentService;
-    private final MenuItemService menuItemService;
-    private final MenuService menuService;
-    private final OptionService optionService;
-    private final OrderService orderService;
+
 
     public TokenReturnDto getToken(String token){
-        String id = jwtTokenManager.getIdFromToken(token).orElseThrow(() -> new ProductServiceException(ErrorType.INVALID_TOKEN));
-        String name =jwtTokenManager.getNameFromToken(token).orElseThrow(() -> new ProductServiceException(ErrorType.INVALID_UNAUTHORIZED));
+        String id = jwtTokenManager.getIdFromToken(token).orElseThrow(() -> new CartServiceException(ErrorType.INVALID_TOKEN));
+        String name =jwtTokenManager.getNameFromToken(token).orElseThrow(() -> new CartServiceException(ErrorType.INVALID_UNAUTHORIZED));
         //String password =jwtTokenManager.getPasswordFromToken(token).orElseThrow(() -> new ProductServiceException(ErrorType.INVALID_UNAUTHORIZED));
-        String role = jwtTokenManager.getRoleFromToken(token).orElseThrow(() -> new ProductServiceException(ErrorType.INVALID_UNAUTHORIZED));
+        String role = jwtTokenManager.getRoleFromToken(token).orElseThrow(() -> new CartServiceException(ErrorType.INVALID_UNAUTHORIZED));
 
         TokenReturnDto dto = TokenReturnDto.builder()
                 .id(id)
@@ -43,9 +36,9 @@ public class JwtUserDetails implements UserDetailsService {
         return dto;
     }
     public TokenReturnDto getUserToken(String token){
-        String id = jwtTokenManager.getIdFromToken(token).orElseThrow(() -> new ProductServiceException(ErrorType.INVALID_TOKEN));
-        String name =jwtTokenManager.getNameFromToken(token).orElseThrow(() -> new ProductServiceException(ErrorType.INVALID_UNAUTHORIZED));
-        String role = jwtTokenManager.getRoleFromToken(token).orElseThrow(() -> new ProductServiceException(ErrorType.INVALID_UNAUTHORIZED));
+        String id = jwtTokenManager.getIdFromToken(token).orElseThrow(() -> new CartServiceException(ErrorType.INVALID_TOKEN));
+        String name =jwtTokenManager.getNameFromToken(token).orElseThrow(() -> new CartServiceException(ErrorType.INVALID_UNAUTHORIZED));
+        String role = jwtTokenManager.getRoleFromToken(token).orElseThrow(() -> new CartServiceException(ErrorType.INVALID_UNAUTHORIZED));
 
         TokenReturnDto dto = TokenReturnDto.builder()
                 .id(id)
